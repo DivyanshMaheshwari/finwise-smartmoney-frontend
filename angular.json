@@ -24,12 +24,11 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ]
           },
@@ -94,5 +93,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "6ca2be6d-70cc-4545-a908-aa8ce686b3ff"
   }
 }

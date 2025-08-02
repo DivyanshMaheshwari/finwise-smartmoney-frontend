@@ -1,0 +1,39 @@
+<!-- Top Navbar -->
+<div
+  class="fixed top-0 left-0 right-0 bg-gray-900 text-white flex justify-between items-center px-6 py-4 shadow-md z-50"
+>
+  <!-- Branding -->
+  <div class="text-2xl font-bold tracking-wide flex items-center gap-2">
+    <!-- <img src="assets/logo-white.png" alt="FinWise Logo" class="h-8 w-8" /> -->
+    FinWise
+  </div>
+
+  <!-- User Profile + Dropdown -->
+  <div class="relative">
+    <div
+      class="flex items-center gap-3 cursor-pointer select-none transition hover:opacity-90"
+      (click)="toggleDropdown()"
+    >
+      <div class="text-sm hidden md:block">Hi, {{ userName }} 👋</div>
+      <div
+        class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold"
+      >
+        {{ userInitial }}
+      </div>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div
+      *ngIf="showDropdown"
+      class="absolute right-0 mt-3 w-44 bg-white text-black rounded-xl shadow-lg py-2 animate-fade-in z-50"
+    >
+      <div
+        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        (click)="logout()"
+      >
+        Logout
+      </div>
+      <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<!-- Sidebar Wrapper -->
+<div
+  class="relative h-screen transition-all duration-300 bg-gray-900 text-white pt-20"
+  [ngClass]="{
+    'w-64': !isCollapsed,
+    'w-16': isCollapsed
+  }"
+>
+  <!-- Toggle Button -->
+  <button
+    (click)="toggleSidebar()"
+    class="absolute top-1/2 -right-4 transform -translate-y-1/2 z-50 bg-gray-800 text-white p-2 rounded-full shadow-lg hover:bg-gray-700 transition-all"
+  >
+    <i
+      class="las text-xl"
+      [ngClass]="{
+        'la-angle-left': !isCollapsed,
+        'la-angle-right': isCollapsed
+      }"
+    ></i>
+  </button>
+
+  <!-- Sidebar Content -->
+  <nav
+    class="h-full transition-all duration-300"
+    [ngClass]="{
+      'flex flex-col items-center justify-start space-y-4': isCollapsed,
+      'flex flex-col space-y-1': !isCollapsed
+    }"
+  >
+    <a
+      routerLink="/dashboard"
+      class="flex items-center p-3 hover:bg-gray-800 transition-all duration-200 w-full"
+      [ngClass]="{
+        'justify-center': isCollapsed,
+        'space-x-3 pl-4': !isCollapsed
+      }"
+    >
+      <i class="las la-chart-pie text-xl"></i>
+      <span *ngIf="!isCollapsed">Dashboard</span>
+    </a>
+
+    <a
+      routerLink="/income"
+      class="flex items-center p-3 hover:bg-gray-800 transition-all duration-200 w-full"
+      [ngClass]="{
+        'justify-center': isCollapsed,
+        'space-x-3 pl-4': !isCollapsed
+      }"
+    >
+      <i class="las la-wallet text-xl"></i>
+      <span *ngIf="!isCollapsed">Income</span>
+    </a>
+
+    <a
+      routerLink="/expense"
+      class="flex items-center p-3 hover:bg-gray-800 transition-all duration-200 w-full"
+      [ngClass]="{
+        'justify-center': isCollapsed,
+        'space-x-3 pl-4': !isCollapsed
+      }"
+    >
+      <i class="las la-money-bill text-xl"></i>
+      <span *ngIf="!isCollapsed">Expenses</span>
+    </a>
+
+    <a
+      routerLink="/saving"
+      class="flex items-center p-3 hover:bg-gray-800 transition-all duration-200 w-full"
+      [ngClass]="{
+        'justify-center': isCollapsed,
+        'space-x-3 pl-4': !isCollapsed
+      }"
+    >
+      <i class="las la-piggy-bank text-xl"></i>
+      <span *ngIf="!isCollapsed">Savings</span>
+    </a>
+
+    <a
+      routerLink="/budget"
+      class="flex items-center p-3 hover:bg-gray-800 transition-all duration-200 w-full"
+      [ngClass]="{
+        'justify-center': isCollapsed,
+        'space-x-3 pl-4': !isCollapsed
+      }"
+    >
+      <i class="las la-coins text-xl"></i>
+      <span *ngIf="!isCollapsed">Budget</span>
+    </a>
+  </nav>
+</div>

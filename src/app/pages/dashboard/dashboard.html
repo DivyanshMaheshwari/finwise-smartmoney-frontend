@@ -1,0 +1,90 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 relative"
+>
+  <!-- Fullscreen Loader -->
+  <div
+    *ngIf="loading"
+    class="fixed inset-0 bg-black bg-opacity-50 z-50 flex flex-col justify-center items-center"
+  >
+    <div
+      class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-teal-500"
+    ></div>
+    <p class="mt-4 text-lg text-teal-300 font-medium">
+      Loading your dashboard...
+    </p>
+  </div>
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Welcome to FinWise Dashboard</h1>
+  </div>
+
+  <!-- Dashboard Content -->
+  <ng-container *ngIf="!loading && summary">
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div
+        class="bg-white/5 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/10"
+      >
+        <h2 class="text-lg text-gray-300">Total Income</h2>
+        <p class="text-2xl font-semibold text-green-400">
+          ₹{{ summary.totalIncome }}
+        </p>
+      </div>
+      <div
+        class="bg-white/5 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/10"
+      >
+        <h2 class="text-lg text-gray-300">Total Expenses</h2>
+        <p class="text-2xl font-semibold text-red-400">
+          ₹{{ summary.totalExpenses }}
+        </p>
+      </div>
+      <div
+        class="bg-white/5 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/10"
+      >
+        <h2 class="text-lg text-gray-300">Net Balance</h2>
+        <p class="text-2xl font-semibold text-blue-400">
+          ₹{{ summary.netSavings }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Budget Breakdown -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div
+        class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
+      >
+        <h3 class="text-sm text-gray-400">Budgeted Needs</h3>
+        <p class="text-lg font-semibold text-yellow-400">
+          ₹{{ summary.budgetedNeeds }}
+        </p>
+      </div>
+      <div
+        class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
+      >
+        <h3 class="text-sm text-gray-400">Budgeted Wants</h3>
+        <p class="text-lg font-semibold text-purple-400">
+          ₹{{ summary.budgetedWants }}
+        </p>
+      </div>
+      <div
+        class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
+      >
+        <h3 class="text-sm text-gray-400">Budgeted Investments</h3>
+        <p class="text-lg font-semibold text-indigo-400">
+          ₹{{ summary.budgetedInvestments }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Charts Placeholder -->
+    <div
+      class="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 shadow-md"
+    >
+      <p class="text-gray-400 mb-2">Charts will go here (bar / pie)</p>
+      <div class="h-64 flex items-center justify-center text-gray-500">
+        📊 Coming soon...
+      </div>
+    </div>
+  </ng-container>
+</div>
