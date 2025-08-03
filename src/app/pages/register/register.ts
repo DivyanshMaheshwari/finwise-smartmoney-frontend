@@ -8,6 +8,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,7 @@ import { CommonModule } from '@angular/common';
 export class Register {
   registerForm: FormGroup;
   showPassword = false;
+  private readonly registerUrl = `${environment.authBaseUrl}/register`;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +39,7 @@ export class Register {
     if (this.registerForm.valid) {
       const userData = this.registerForm.value;
       this.http
-        .post('http://localhost:8081/auth/register', userData, {
+        .post(this.registerUrl, userData, {
           responseType: 'text',
         })
         .subscribe({

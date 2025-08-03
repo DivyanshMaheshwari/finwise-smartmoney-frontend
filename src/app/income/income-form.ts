@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../services/ToastService';
 import { ConfirmationModal } from '../components/confirmation-modal/confirmation-modal';
+import { environment } from '../environments/environment';
 
 interface IncomePayload {
   amount: number | null;
@@ -54,6 +55,9 @@ export class IncomeForm implements OnInit {
   selectedMonth = new Date().getMonth() + 1;
   selectedYear = new Date().getFullYear();
 
+  // ✅ Step 2: Use baseUrl for all HTTP requests
+  private readonly baseUrl = `${environment.apiBaseUrl}/income`;
+
   constructor(private http: HttpClient, private toast: ToastService) {}
 
   ngOnInit() {
@@ -81,7 +85,7 @@ export class IncomeForm implements OnInit {
 
     this.loading = true;
     this.http
-      .post('http://localhost:8080/FinWise/income', payload, {
+      .post(`${this.baseUrl}`, payload, {
         responseType: 'text',
       })
       .subscribe({
@@ -102,9 +106,7 @@ export class IncomeForm implements OnInit {
     this.incomeListLoading = true;
 
     this.http
-      .get<IncomeResponse[]>(
-        `http://localhost:8080/FinWise/income?month=${month}&year=${year}`
-      )
+      .get<IncomeResponse[]>(`${this.baseUrl}?month=${month}&year=${year}`)
       .subscribe({
         next: (res) => {
           this.incomeList = res;
@@ -149,7 +151,7 @@ export class IncomeForm implements OnInit {
     this.deletingIds.add(id);
 
     this.http
-      .delete(`http://localhost:8080/FinWise/income/remove/${id}`, {
+      .delete(`${this.baseUrl}/remove/${id}`, {
         responseType: 'text',
       })
       .subscribe({
@@ -168,7 +170,8 @@ export class IncomeForm implements OnInit {
         },
       });
   }
+
   get isDeleting(): boolean {
-  return this.pendingDeleteId !== null && this.deletingIds.has(this.pendingDeleteId);
-}
+    return this.pendingDeleteId !== null && this.deletingIds.has(this.pendingDeleteId);
+  }
 }

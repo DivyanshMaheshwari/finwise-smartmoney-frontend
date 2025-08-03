@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { ToastService } from '../services/ToastService';
 import { ConfirmationModal } from '../components/confirmation-modal/confirmation-modal';
 
+// ✅ Import environment
+import { environment } from '../environments/environment';
+
 interface ExpensePayload {
   amount: number | null;
   date: string;
@@ -53,13 +56,11 @@ export class ExpenseForm implements OnInit {
   loading = false;
   expenseListLoading = false;
 
-  // Category dropdown logic
   categoryList = ['Rent', 'Subscription', 'Utilities', 'Travel', 'Other'];
   selectedCategory = '';
   customCategory = '';
   showCustomCategory = false;
 
-  // Payment mode logic
   customPaymentMode = '';
   selectedPaymentMode = '';
 
@@ -69,6 +70,9 @@ export class ExpenseForm implements OnInit {
   showConfirmModal = false;
   pendingDeleteId: string | null = null;
   deletingIds: Set<string> = new Set();
+
+  // ✅ Define backend base URL
+  private readonly baseUrl = `${environment.apiBaseUrl}/expense`;
 
   constructor(private http: HttpClient, private toast: ToastService) {}
 
@@ -105,7 +109,6 @@ export class ExpenseForm implements OnInit {
   }
 
   submitExpense() {
-    // Handle category
     if (this.expense.category === 'Other') {
       if (!this.customCategory.trim()) {
         alert('Please specify a custom category.');
@@ -114,7 +117,6 @@ export class ExpenseForm implements OnInit {
       this.expense.category = this.customCategory.trim();
     }
 
-    // Handle payment mode
     if (this.selectedPaymentMode === 'Other') {
       if (!this.customPaymentMode.trim()) {
         alert('Please specify a custom payment mode.');
@@ -131,7 +133,7 @@ export class ExpenseForm implements OnInit {
 
     this.loading = true;
     this.http
-      .post('http://localhost:8080/FinWise/expense', this.expense, {
+      .post(`${this.baseUrl}`, this.expense, {
         responseType: 'text',
       })
       .subscribe({
@@ -152,7 +154,7 @@ export class ExpenseForm implements OnInit {
     this.expenseListLoading = true;
     setTimeout(() => {
       this.http
-        .get<ExpenseResponse[]>(`http://localhost:8080/FinWise/expense?month=${month}&year=${year}`)
+        .get<ExpenseResponse[]>(`${this.baseUrl}?month=${month}&year=${year}`)
         .subscribe({
           next: (res) => {
             this.expenseList = res;
@@ -210,7 +212,7 @@ export class ExpenseForm implements OnInit {
     this.deletingIds.add(id);
 
     this.http
-      .delete(`http://localhost:8080/FinWise/expense/remove/${id}`, {
+      .delete(`${this.baseUrl}/remove/${id}`, {
         responseType: 'text',
       })
       .subscribe({

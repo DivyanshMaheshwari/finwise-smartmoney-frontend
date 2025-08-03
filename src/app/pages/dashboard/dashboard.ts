@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/AuthService';
 
+// ✅ Import environment
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -19,6 +22,9 @@ export class Dashboard implements OnInit {
   years: number[] = [];
   selectedMonth: number = getMonth(new Date()) + 1;
   selectedYear: number = getYear(new Date());
+
+  // ✅ Use base URL from environment
+  private readonly baseUrl = `${environment.apiBaseUrl}/summary`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -42,7 +48,7 @@ export class Dashboard implements OnInit {
 
   loadDashboardData(): void {
     this.loading = true;
-    const apiUrl = `http://localhost:8080/FinWise/summary?month=${this.selectedMonth}&year=${this.selectedYear}`;
+    const apiUrl = `${this.baseUrl}?month=${this.selectedMonth}&year=${this.selectedYear}`;
     this.http.get(apiUrl).subscribe({
       next: (response: any) => {
         this.summary = response;

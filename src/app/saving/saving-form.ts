@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../services/ToastService';
 import { ConfirmationModal } from '../components/confirmation-modal/confirmation-modal';
+import { environment } from '../environments/environment';
 
 interface SavingPayload {
   amount: number | null;
@@ -52,7 +53,7 @@ export class SavingForm implements OnInit {
   deletingIds: Set<string> = new Set();
 
   showCustomCategory = false;
-  customCategory = ''; // <-- Add this
+  customCategory = '';
   showConfirmModal = false;
   pendingDeleteId: string | null = null;
 
@@ -72,6 +73,9 @@ export class SavingForm implements OnInit {
     'Silver',
     'Other',
   ];
+
+  // ✅ Use base URL from environment
+  private readonly baseUrl = `${environment.apiBaseUrl}/savings`;
 
   constructor(private http: HttpClient, private toast: ToastService) {}
 
@@ -104,7 +108,7 @@ export class SavingForm implements OnInit {
 
     this.loading = true;
     this.http
-      .post('http://localhost:8080/FinWise/savings', payload, {
+      .post(`${this.baseUrl}`, payload, {
         responseType: 'text',
       })
       .subscribe({
@@ -126,7 +130,7 @@ export class SavingForm implements OnInit {
     const { selectedMonth, selectedYear } = this;
     this.http
       .get<SavingResponse[]>(
-        `http://localhost:8080/FinWise/savings?month=${selectedMonth}&year=${selectedYear}`
+        `${this.baseUrl}?month=${selectedMonth}&year=${selectedYear}`
       )
       .subscribe({
         next: (res) => {
@@ -162,7 +166,7 @@ export class SavingForm implements OnInit {
   onCategoryChange(value: string) {
     this.showCustomCategory = value === 'Other';
     if (this.showCustomCategory) {
-      this.saving.category = ''; // Don't keep "Other" in the model
+      this.saving.category = '';
     }
   }
 
@@ -179,7 +183,7 @@ export class SavingForm implements OnInit {
   deleteSaving(id: string) {
     this.deletingIds.add(id);
     this.http
-      .delete(`http://localhost:8080/FinWise/savings/remove/${id}`, {
+      .delete(`${this.baseUrl}/remove/${id}`, {
         responseType: 'text',
       })
       .subscribe({

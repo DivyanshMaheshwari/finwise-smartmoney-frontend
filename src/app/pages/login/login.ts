@@ -1,4 +1,3 @@
-// login.ts
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -9,6 +8,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +19,8 @@ import { CommonModule } from '@angular/common';
 export class Login {
   loginForm: FormGroup;
   loading: boolean = false;
+
+  private readonly authUrl = `${environment.authBaseUrl}/login`;
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +44,7 @@ export class Login {
           userId: string;
           firstName: string;
           lastName: string;
-        }>('http://localhost:8081/auth/login', credentials)
+        }>(this.authUrl, credentials) // ✅ Use dynamic URL
         .subscribe({
           next: (response) => {
             localStorage.setItem('token', response.token);
