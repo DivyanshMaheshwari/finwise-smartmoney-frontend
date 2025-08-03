@@ -6,7 +6,7 @@ import { ToastService } from '../services/ToastService';
 import { ConfirmationModal } from '../components/confirmation-modal/confirmation-modal';
 
 // ✅ Import environment
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 interface ExpensePayload {
   amount: number | null;

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../services/ToastService';
 import { ConfirmationModal } from '../components/confirmation-modal/confirmation-modal';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 interface SavingPayload {
   amount: number | null;

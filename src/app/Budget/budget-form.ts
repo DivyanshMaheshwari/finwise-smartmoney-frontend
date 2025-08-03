@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../services/ToastService';
 import { ConfirmationModal } from '../components/confirmation-modal/confirmation-modal';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 interface BudgetPlan {
   incomeId: string;

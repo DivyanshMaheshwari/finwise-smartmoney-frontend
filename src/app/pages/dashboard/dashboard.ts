@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/AuthService';
 
 // ✅ Import environment
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
