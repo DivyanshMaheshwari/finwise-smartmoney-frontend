@@ -25,7 +25,6 @@ export class BudgetForm implements OnInit {
   loading = false;
   generating = false;
 
-  // ✅ Use base URL from environment
   private readonly baseUrl = `${environment.apiBaseUrl}/budget`;
 
   constructor(private http: HttpClient, private toast: ToastService) {}

@@ -44,7 +44,7 @@ export class Login {
           userId: string;
           firstName: string;
           lastName: string;
-        }>(this.authUrl, credentials) // ✅ Use dynamic URL
+        }>(this.authUrl, credentials)
         .subscribe({
           next: (response) => {
             localStorage.setItem('token', response.token);
