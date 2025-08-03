@@ -19,11 +19,13 @@ export const routes: Routes = [
   //     { path: 'register', component: Register }
   //   ]
   // },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
   {
     path: '',
     component: MainLayout,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: Dashboard },
       { path: 'income', component: IncomeForm },
       { path: 'expense', component: ExpenseForm },
@@ -33,6 +35,4 @@ export const routes: Routes = [
       // other routes...
     ],
   },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
 ];
