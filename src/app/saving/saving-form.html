@@ -17,153 +17,197 @@
     class="max-w-5xl mx-auto bg-white/5 p-8 rounded-xl shadow-md border border-white/10 mb-12"
   >
     <h2 class="text-2xl font-bold mb-6 text-teal-300">Add Saving</h2>
-
-    <form
-      #savingForm="ngForm"
-      (ngSubmit)="submitSaving()"
-      class="space-y-6"
-      novalidate
-    >
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Amount -->
-        <div>
-          <label class="block text-sm font-medium mb-1">Amount *</label>
-          <input
-            type="number"
-            [(ngModel)]="saving.amount"
-            name="amount"
-            required
-            class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
-            placeholder="Enter amount"
-          />
-        </div>
-
-        <!-- Date -->
-        <div>
-          <label class="block text-sm font-medium mb-1">Date *</label>
-          <input
-            type="date"
-            [(ngModel)]="saving.date"
-            name="date"
-            required
-            class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
-          />
-        </div>
-
-        <!-- Category -->
-        <div>
-          <label class="block text-sm font-medium mb-1">Category *</label>
-          <select
-            [(ngModel)]="saving.category"
-            name="category"
-            (change)="onCategoryChange(saving.category)"
-            class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
-            required
-          >
-            <option value="" disabled selected>Select Category</option>
-            <option *ngFor="let cat of category" [value]="cat">
-              {{ cat }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Custom Category -->
-        <div *ngIf="showCustomCategory">
-          <label class="block text-sm font-medium mb-1 mt-1"
-            >Specify Category *</label
-          >
-          <input
-            type="text"
-            [(ngModel)]="saving.category"
-            name="customCategory"
-            class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
-            placeholder="Enter custom category"
-            required
-          />
-        </div>
-
-        <!-- Note -->
-        <div class="md:col-span-2 lg:col-span-3">
-          <label class="block text-sm font-medium mb-1">Note (optional)</label>
-          <textarea
-            [(ngModel)]="saving.note"
-            name="note"
-            rows="2"
-            class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2 resize-none"
-            placeholder="Any additional note..."
-          ></textarea>
-        </div>
-
-        <!-- Recurring Checkbox -->
-        <div class="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            [(ngModel)]="saving.isRecurring"
-            name="isRecurring"
-            (change)="onRecurringToggle()"
-            class="form-checkbox h-5 w-5 text-teal-500"
-          />
-          <span>Recurring Saving</span>
-        </div>
-
-        <!-- Recurring Fields -->
-        <ng-container *ngIf="saving.isRecurring">
+    <div class="flex justify-center mb-8 space-x-4">
+      <button
+        (click)="activeTab = 'add'"
+        [ngClass]="{
+          'bg-teal-600 text-white': activeTab === 'add',
+          'bg-gray-700 text-gray-300': activeTab !== 'add'
+        }"
+        class="px-4 py-2 rounded-md font-semibold"
+      >
+        Add Saving
+      </button>
+      <button
+        (click)="activeTab = 'use'"
+        [ngClass]="{
+          'bg-teal-600 text-white': activeTab === 'use',
+          'bg-gray-700 text-gray-300': activeTab !== 'use'
+        }"
+        class="px-4 py-2 rounded-md font-semibold"
+      >
+        Use Saving
+      </button>
+      <button
+        (click)="activeTab = 'total'"
+        [ngClass]="{
+          'bg-teal-600 text-white': activeTab === 'total',
+          'bg-gray-700 text-gray-300': activeTab !== 'total'
+        }"
+        class="px-4 py-2 rounded-md font-semibold"
+      >
+        Total Saving
+      </button>
+    </div>
+    <div *ngIf="activeTab === 'add'">
+      <form
+        #savingForm="ngForm"
+        (ngSubmit)="submitSaving()"
+        class="space-y-6"
+        novalidate
+      >
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Amount -->
           <div>
-            <label class="block text-sm font-medium mb-1">Frequency *</label>
-            <select
-              [(ngModel)]="saving.frequency"
-              name="frequency"
+            <label class="block text-sm font-medium mb-1">Amount *</label>
+            <input
+              type="number"
+              [(ngModel)]="saving.amount"
+              name="amount"
               required
               class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+              placeholder="Enter amount"
+            />
+          </div>
+
+          <!-- Date -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Date *</label>
+            <input
+              type="date"
+              [(ngModel)]="saving.date"
+              name="date"
+              required
+              class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+            />
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Category *</label>
+            <select
+              [(ngModel)]="saving.category"
+              name="category"
+              (change)="onCategoryChange(saving.category)"
+              class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+              required
             >
-              <option value="WEEKLY">Weekly</option>
-              <option value="MONTHLY">Monthly</option>
-              <option value="YEARLY">Yearly</option>
+              <option value="" disabled selected>Select Category</option>
+              <option *ngFor="let cat of category" [value]="cat">
+                {{ cat }}
+              </option>
             </select>
           </div>
 
-          <div>
-            <label class="block text-sm font-medium mb-1"
-              >Recurring Day *</label
+          <!-- Custom Category -->
+          <div *ngIf="showCustomCategory">
+            <label class="block text-sm font-medium mb-1 mt-1"
+              >Specify Category *</label
             >
             <input
-              type="number"
-              [(ngModel)]="saving.recurringDay"
-              name="recurringDay"
-              required
-              min="1"
-              max="31"
+              type="text"
+              [(ngModel)]="saving.category"
+              name="customCategory"
               class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
-              placeholder="e.g., 10 for 10th"
+              placeholder="Enter custom category"
+              required
             />
           </div>
 
-          <div>
-            <label class="block text-sm font-medium mb-1">End Date *</label>
+          <!-- Note -->
+          <div class="md:col-span-2 lg:col-span-3">
+            <label class="block text-sm font-medium mb-1"
+              >Note (optional)</label
+            >
+            <textarea
+              [(ngModel)]="saving.note"
+              name="note"
+              rows="2"
+              class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2 resize-none"
+              placeholder="Any additional note..."
+            ></textarea>
+          </div>
+
+          <!-- Recurring Checkbox -->
+          <div class="flex items-center space-x-2">
             <input
-              type="date"
-              [(ngModel)]="saving.endDate"
-              name="endDate"
-              required
-              class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+              type="checkbox"
+              [(ngModel)]="saving.isRecurring"
+              name="isRecurring"
+              (change)="onRecurringToggle()"
+              class="form-checkbox h-5 w-5 text-teal-500"
             />
+            <span>Recurring Saving</span>
           </div>
-        </ng-container>
-      </div>
 
-      <!-- Submit Button -->
-      <div class="flex justify-end">
-        <button
-          type="submit"
-          [disabled]="
-            savingForm.invalid || (saving.isRecurring && !saving.frequency)
-          "
-          class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2 rounded-md transition shadow disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Add Saving
-        </button>
-      </div>
-    </form>
+          <!-- Recurring Fields -->
+          <ng-container *ngIf="saving.isRecurring">
+            <div>
+              <label class="block text-sm font-medium mb-1">Frequency *</label>
+              <select
+                [(ngModel)]="saving.frequency"
+                name="frequency"
+                required
+                class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+              >
+                <option value="WEEKLY">Weekly</option>
+                <option value="MONTHLY">Monthly</option>
+                <option value="YEARLY">Yearly</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1"
+                >Recurring Day *</label
+              >
+              <input
+                type="number"
+                [(ngModel)]="saving.recurringDay"
+                name="recurringDay"
+                required
+                min="1"
+                max="31"
+                class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+                placeholder="e.g., 10 for 10th"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">End Date *</label>
+              <input
+                type="date"
+                [(ngModel)]="saving.endDate"
+                name="endDate"
+                required
+                class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
+              />
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            [disabled]="
+              savingForm.invalid || (saving.isRecurring && !saving.frequency)
+            "
+            class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2 rounded-md transition shadow disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Add Saving
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="activeTab === 'use'" class="max-w-5xl mx-auto text-gray-300">
+      <!-- TODO: Add Use Saving form here -->
+      <p class="text-center text-lg">Use saving feature coming soon...</p>
+    </div>
+
+    <div *ngIf="activeTab === 'total'" class="max-w-5xl mx-auto text-gray-300">
+      <!-- TODO: Add Total Saving breakdown here -->
+      <p class="text-center text-lg">Total saving breakdown coming soon...</p>
+    </div>
   </div>
 
   <!-- Saving List -->

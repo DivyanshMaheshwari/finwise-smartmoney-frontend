@@ -58,13 +58,18 @@ export class SavingForm implements OnInit {
 
   selectedMonth = new Date().getMonth() + 1;
   selectedYear = new Date().getFullYear();
+  activeTab: 'add' | 'use' | 'total' = 'add';
 
   category: string[] = [
-    'Select Category',
+    'FD',
+    'RD',
     'Emergency Fund',
-    'Retirement',
-    'Vacation',
-    'Education',
+    'SIP',
+    'Stocks',
+    'Crypto',
+    'Gold',
+    'Gold',
+    'Silver',
     'Other',
   ];
 
@@ -155,12 +160,11 @@ export class SavingForm implements OnInit {
   }
 
   onCategoryChange(value: string) {
-  this.showCustomCategory = value === 'Other';
-  if (this.showCustomCategory) {
-    this.saving.category = ''; // Don't keep "Other" in the model
+    this.showCustomCategory = value === 'Other';
+    if (this.showCustomCategory) {
+      this.saving.category = ''; // Don't keep "Other" in the model
+    }
   }
-}
-
 
   confirmDelete(id: string) {
     this.pendingDeleteId = id;

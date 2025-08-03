@@ -18,6 +18,35 @@
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold">Welcome to FinWise Dashboard</h1>
   </div>
+  <!-- Month-Year Selection -->
+<div class="flex flex-wrap gap-4 items-center mb-6">
+  <div>
+    <label class="text-sm text-gray-300 block mb-1">Select Month</label>
+    <select
+      [(ngModel)]="selectedMonth"
+      (ngModelChange)="onMonthYearChange()"
+      class="bg-gray-800 text-white border border-white/20 rounded-md px-4 py-2"
+    >
+      <option *ngFor="let month of months" [value]="month.value">
+        {{ month.name }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label class="text-sm text-gray-300 block mb-1">Select Year</label>
+    <select
+      [(ngModel)]="selectedYear"
+      (ngModelChange)="onMonthYearChange()"
+      class="bg-gray-800 text-white border border-white/20 rounded-md px-4 py-2"
+    >
+      <option *ngFor="let year of years" [value]="year">
+        {{ year }}
+      </option>
+    </select>
+  </div>
+</div>
+
 
   <!-- Dashboard Content -->
   <ng-container *ngIf="!loading && summary">
@@ -56,7 +85,7 @@
       >
         <h3 class="text-sm text-gray-400">Budgeted Needs</h3>
         <p class="text-lg font-semibold text-yellow-400">
-          ₹{{ summary.budgetedNeeds }}
+          ₹{{ summary.budgetedNeeds || 0}}
         </p>
       </div>
       <div
@@ -64,19 +93,46 @@
       >
         <h3 class="text-sm text-gray-400">Budgeted Wants</h3>
         <p class="text-lg font-semibold text-purple-400">
-          ₹{{ summary.budgetedWants }}
+          ₹{{ summary.budgetedWants || 0 }}
         </p>
       </div>
       <div
         class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
       >
-        <h3 class="text-sm text-gray-400">Budgeted Investments</h3>
+        <h3 class="text-sm text-gray-400">Budgeted Savings</h3>
         <p class="text-lg font-semibold text-indigo-400">
-          ₹{{ summary.budgetedInvestments }}
+          ₹{{ summary.budgetedInvestments || 0}}
         </p>
       </div>
     </div>
 
+    <!-- Actual Budget Breakdown -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div
+        class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
+      >
+        <h3 class="text-sm text-gray-400">Actual Needs</h3>
+        <p class="text-lg font-semibold text-yellow-400">
+          ₹{{ summary.actualNeeds }}
+        </p>
+      </div>
+      <div
+        class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
+      >
+        <h3 class="text-sm text-gray-400">Actual Wants</h3>
+        <p class="text-lg font-semibold text-purple-400">
+          ₹{{ summary.actualWants }}
+        </p>
+      </div>
+      <div
+        class="bg-white/5 backdrop-blur-sm p-4 rounded-xl shadow-md border border-white/10"
+      >
+        <h3 class="text-sm text-gray-400">Actual Savings</h3>
+        <p class="text-lg font-semibold text-indigo-400">
+          ₹{{ summary.actualInvestments }}
+        </p>
+      </div>
+    </div>
     <!-- Charts Placeholder -->
     <div
       class="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 shadow-md"

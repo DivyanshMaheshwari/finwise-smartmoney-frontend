@@ -133,12 +133,11 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-1">End Date *</label>
+            <label class="block text-sm font-medium mb-1">End Date</label>
             <input
               type="date"
               [(ngModel)]="income.endDate"
               name="endDate"
-              required
               class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
             />
           </div>
@@ -278,7 +277,10 @@
               income.amount
             }}
           </p>
-          <p><span class="font-semibold">Date:</span> {{ income.date }}</p>
+          <p>
+            <span class="font-semibold">Date:</span>
+            {{ income.date | date : "dd-MMM-yyyy" }}
+          </p>
           <p>
             <span class="font-semibold">Category:</span> {{ income.category }}
           </p>

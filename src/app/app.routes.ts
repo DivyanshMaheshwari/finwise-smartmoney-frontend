@@ -7,6 +7,8 @@ import { MainLayout } from './core/layouts/main-layout/main-layout';
 import { IncomeForm } from './income/income-form';
 import { ExpenseForm } from './expense/expense-form';
 import { SavingForm } from './saving/saving-form';
+import { BudgetForm } from './Budget/budget-form';
+
 export const routes: Routes = [
   //  {
   //   path: '',
@@ -26,6 +28,7 @@ export const routes: Routes = [
       { path: 'income', component: IncomeForm },
       { path: 'expense', component: ExpenseForm },
       { path: 'saving', component: SavingForm },
+      { path: 'budget', component: BudgetForm },
 
       // other routes...
     ],

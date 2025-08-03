@@ -94,20 +94,21 @@
           />
         </div>
 
-        <!-- Type -->
+        <!-- Type Dropdown -->
         <div>
-          <label class="block text-sm font-medium mb-1">Type *</label>
-          <input
-            type="text"
+          <label class="block text-sm font-medium mb-1">Expense Type *</label>
+          <select
             [(ngModel)]="expense.type"
             name="type"
             required
             class="w-full rounded-md bg-gray-800 text-white border border-white/20 px-4 py-2"
-            placeholder="e.g., Personal, Business"
-          />
+          >
+            <option value="" disabled selected>Select Type</option>
+            <option value="Needs">Needs</option>
+            <option value="Wants">Wants</option>
+          </select>
         </div>
 
-        <!-- Payment Mode -->
         <!-- Payment Mode -->
         <div>
           <label class="block text-sm font-medium mb-1">Payment Mode *</label>
@@ -129,7 +130,7 @@
         <!-- Custom Payment Mode Input -->
         <div *ngIf="selectedPaymentMode === 'Other'">
           <label class="block text-sm font-medium mb-1 mt-1"
-            >Enter Custom Payment Mode *</label
+            >Enter Payment Mode *</label
           >
           <input
             type="text"
@@ -345,7 +346,10 @@
               expense.amount
             }}
           </p>
-          <p><span class="font-semibold">Date:</span> {{ expense.date }}</p>
+          <p>
+            <span class="font-semibold">Date:</span>
+            {{ expense.date | date : "dd-MMM-yyyy" }}
+          </p>
           <p>
             <span class="font-semibold">Category:</span> {{ expense.category }}
           </p>
