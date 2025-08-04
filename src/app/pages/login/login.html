@@ -1,67 +1,70 @@
 <body
-  class="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] flex items-center justify-center font-sans relative"
+  class="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] font-sans relative"
 >
   <!-- Loading Overlay -->
   <div
     *ngIf="loading"
     class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
   >
-    <div
-      class="border-4 border-cyan-400 border-t-transparent rounded-full w-12 h-12 animate-spin"
-    ></div>
+    <div class="border-4 border-cyan-400 border-t-transparent rounded-full w-12 h-12 animate-spin"></div>
   </div>
 
-  <div
-    class="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-10 max-w-md w-full text-white z-10"
-  >
-    <div class="flex flex-col items-center mb-6">
-      <img src="assets/finwise-logo.png" class="h-12 mb-2" alt="FinWise Logo" />
-      <h2 class="text-3xl font-semibold tracking-tight">Welcome Back</h2>
-      <p class="text-gray-300 text-sm">Login to manage your finances smartly</p>
+  <!-- Centering Wrapper -->
+  <div class="flex items-center justify-center min-h-screen px-4">
+    <!-- Login Card -->
+    <div
+      class="bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-8 sm:p-10 w-full max-w-md z-10 text-white"
+    >
+      <div class="flex flex-col items-center mb-4">
+        <img
+          src="assets/100.png"
+          alt="FinWise Logo"
+          class="h-20 sm:h-24 md:h-32 w-auto mb-2 drop-shadow-xl"
+        />
+        <h2 class="text-3xl font-semibold tracking-tight text-center">Welcome Back</h2>
+        <p class="text-gray-300 text-sm text-center mt-1">
+          Login to manage your finances smartly
+        </p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div>
+          <label class="block text-sm text-gray-200 mb-1">Email</label>
+          <input
+            formControlName="emailOrUserId"
+            type="text"
+            placeholder="Email"
+            class="w-full px-4 py-2 rounded-lg bg-white/30 border border-white/40 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-200 mb-1">Password</label>
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="••••••••"
+            class="w-full px-4 py-2 rounded-lg bg-white/30 border border-white/40 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-semibold py-2 rounded-lg transition duration-300"
+          [disabled]="loading"
+        >
+          Login
+        </button>
+      </form>
+
+      <p class="mt-5 text-center text-sm text-gray-300">
+        Don’t have an account?
+        <a
+          routerLink="/register"
+          class="text-cyan-400 font-medium hover:underline"
+          >Sign up</a
+        >
+      </p>
     </div>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
-      <div>
-        <label class="block text-sm text-gray-200 mb-1">Email or User ID</label>
-        <input
-          formControlName="emailOrUserId"
-          type="text"
-          placeholder="you@finwise.com"
-          class="w-full px-4 py-2 rounded-xl bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-        />
-      </div>
-
-      <div>
-        <label class="block text-sm text-gray-200 mb-1">Password</label>
-        <input
-          formControlName="password"
-          type="password"
-          placeholder="••••••••"
-          class="w-full px-4 py-2 rounded-xl bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-        />
-      </div>
-
-      <!-- <div class="flex justify-between text-sm text-gray-400">
-        <span></span>
-        <a href="#" class="hover:underline">Forgot password?</a>
-      </div> -->
-
-      <button
-        type="submit"
-        class="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-semibold py-2 rounded-xl transition duration-300"
-        [disabled]="loading"
-      >
-        Login
-      </button>
-    </form>
-
-    <p class="mt-6 text-center text-sm text-gray-300">
-      Don’t have an account?
-      <a
-        routerLink="/register"
-        class="text-cyan-400 font-medium hover:underline"
-        >Sign up</a
-      >
-    </p>
   </div>
 </body>
