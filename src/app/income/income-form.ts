@@ -47,6 +47,8 @@ export class IncomeForm implements OnInit {
   incomeList: IncomeResponse[] = [];
   loading = false;
   incomeListLoading = false;
+  editingIncomeId: string | null = null;
+
   deletingIds: Set<string> = new Set();
 
   showConfirmModal = false;
@@ -55,7 +57,6 @@ export class IncomeForm implements OnInit {
   selectedMonth = new Date().getMonth() + 1;
   selectedYear = new Date().getFullYear();
 
-  // ✅ Step 2: Use baseUrl for all HTTP requests
   private readonly baseUrl = `${environment.apiBaseUrl}/income`;
 
   constructor(private http: HttpClient, private toast: ToastService) {}
@@ -74,6 +75,18 @@ export class IncomeForm implements OnInit {
     }
   }
 
+  editIncome(entry: IncomeResponse) {
+    this.income = {
+      amount: entry.amount,
+      date: entry.date,
+      category: entry.category,
+      source: entry.source,
+      isRecurring: entry.isRecurring,
+      note: entry.note || '',
+    };
+    this.editingIncomeId = entry.id;
+  }
+
   submitIncome() {
     const payload = { ...this.income };
 
@@ -84,19 +97,25 @@ export class IncomeForm implements OnInit {
     }
 
     this.loading = true;
+
+    const url = this.editingIncomeId
+      ? `${this.baseUrl}/update/${this.editingIncomeId}`
+      : this.baseUrl;
+
+    const method = this.editingIncomeId ? 'put' : 'post';
+
     this.http
-      .post(`${this.baseUrl}`, payload, {
-        responseType: 'text',
-      })
+      .request(method, url, { body: payload, responseType: 'text' })
       .subscribe({
         next: () => {
-          this.toast.show('Income added successfully!');
+          const action = this.editingIncomeId ? 'updated' : 'added';
+          this.toast.show(`Income ${action} successfully!`);
           this.resetForm();
           this.fetchIncome(this.selectedMonth, this.selectedYear);
         },
         error: (err) => {
           console.error('Error response:', err);
-          this.toast.show('Failed to add income');
+          this.toast.show('Failed to save income');
         },
         complete: () => (this.loading = false),
       });
@@ -129,6 +148,7 @@ export class IncomeForm implements OnInit {
       isRecurring: false,
       note: '',
     };
+    this.editingIncomeId = null;
   }
 
   onMonthYearChange(selection: { month: number; year: number }) {
@@ -172,6 +192,9 @@ export class IncomeForm implements OnInit {
   }
 
   get isDeleting(): boolean {
-    return this.pendingDeleteId !== null && this.deletingIds.has(this.pendingDeleteId);
+    return (
+      this.pendingDeleteId !== null &&
+      this.deletingIds.has(this.pendingDeleteId)
+    );
   }
 }

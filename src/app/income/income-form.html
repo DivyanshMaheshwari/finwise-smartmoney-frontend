@@ -260,6 +260,28 @@
             </svg>
           </button>
         </ng-container>
+        <!-- Edit Icon -->
+<button
+  (click)="editIncome(income)"
+  class="absolute top-4 right-12 text-cyan-400 hover:text-cyan-600 transition"
+  title="Edit"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-5 w-5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M11 5h2M12 4v1m7.071 2.929a2 2 0 010 2.828l-9.9 9.9a2 2 0 01-1.414.586H6a1 1 0 01-1-1v-2.757a2 2 0 01.586-1.414l9.9-9.9a2 2 0 012.828 0z"
+    />
+  </svg>
+</button>
+
         <ng-template #deleting>
           <div class="absolute top-4 right-4">
             <div
